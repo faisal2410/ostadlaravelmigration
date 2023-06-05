@@ -20,6 +20,7 @@ class PostFactory extends Factory {
         $title = fake()->sentence;
         $slug = Str::slug( $title, '-' );
         return [
+            'user_id'=>rand(1,5),
             'title'        => $title,
             'slug'         => $slug,
             'excerpt'      => fake()->sentence,

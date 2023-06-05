@@ -17,6 +17,7 @@ $posts = collect( json_decode( $json ) );
 
 $posts->each( function ( $post ) {
     Post::create( [
+        
         "title"        => $post->title,
         "slug"         => $post->slug,
         "excerpt"      => $post->excerpt,
