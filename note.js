@@ -201,4 +201,98 @@ $updated=DB::table( 'posts' )
 dd($updated);
 
 
+15.// Update multiple conditions
+        DB::table('posts')
+            ->where('id', 1000)
+            ->orWhere('id', 1001)
+            ->update([
+                'excerpt' => 'Laravel 10x',
+                'description' => 'Laravel 10x'
+            ]);
+
+16.// Increment
+        DB::table('posts')
+            ->where('min_to_read', 1000)
+            ->increment('min_to_read');
+
+17. //Decrement
+        DB::table('posts')
+            ->where('id', 1000)
+            ->decrement('min_to_read', 4);
+
+18.//Increment or decrement multiple columns
+        DB::table('posts')
+            ->incrementEach(['min_to_read', 'lines']);
+
+19.// updateOrInsert
+        DB::table('posts')
+            ->updateOrInsert(
+                ['excerpt' => 'Laravel 10x'],
+                ['id' => 1000]
+            );
+
+
+20.// Delete one row
+        DB::table('posts')
+            ->where('id', 1017)
+            ->delete();
+
+21.//Delete based on multiple conditions
+        DB::table('posts')
+            ->where('id', 1014)
+            ->where('title', 'x')
+            ->delete();
+
+22. //Delete all records
+        DB::table('posts')
+            ->truncate();
+
+👉Aggregate Methods
+
+23. // Count Rows
+        DB::table('posts')->count();
+        DB::table('posts')->where('is_published', true)->count();
+
+23.// Sum
+        DB::table('posts')->sum('min_to_read');
+
+24.// Average
+        DB::table('posts')->avg('min_to_read');
+        DB::table('posts')->where('is_published', true)->avg('min_to_read');
+
+25.//  Max
+        DB::table('posts')->where('is_published', true)->max('min_to_read');
+
+26.// Min
+        DB::table('posts')->where('is_published', true)->min('min_to_read');
+27.// whereNot()
+        DB::table('posts')->whereNot('min_to_read', 1)->get();
+        DB::table('posts')->whereNot('min_to_read', '>', 1)->get();
+
+28.// orWhereNot()
+        DB::table('posts')
+            ->where('min_to_read', '>', 5)
+            ->orWhereNot('is_published', true)
+            ->get();
+
+29. // exists()
+        if(DB::table('posts')->where('id', 343543)->exists()) {
+            echo 'Woohoo, I found a match';
+        } else {
+            echo 'Ahh, I have not found a match';
+        }
+
+30. doesntExist()
+        if(DB::table('posts')->where('id', 343543)->doesntExist()) {
+            echo 'Woohoo, I found a match';
+        } else {
+            echo 'Ahh, I have not found a match';
+        }
+
+31. // whereBetween()
+        DB::table('posts')->whereBetween('min_to_read', [1, 5])->get();
+
+32. //whereNotBetween()
+        DB::table('posts')->whereNotBetween('min_to_read', [1, 5])->get();
+
 */
