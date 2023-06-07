@@ -203,8 +203,8 @@ dd($updated);
 
 15.// Update multiple conditions
         DB::table('posts')
-            ->where('id', 1000)
-            ->orWhere('id', 1001)
+            ->where('id', 3)
+            ->orWhere('id', 4)
             ->update([
                 'excerpt' => 'Laravel 10x',
                 'description' => 'Laravel 10x'
@@ -212,13 +212,21 @@ dd($updated);
 
 16.// Increment
         DB::table('posts')
-            ->where('min_to_read', 1000)
+            ->where('id', 3)
             ->increment('min_to_read');
+16a.// Increment by 10
+        DB::table('posts')
+            ->where('id', 3)
+            ->increment('min_to_read',10);
 
 17. //Decrement
         DB::table('posts')
-            ->where('id', 1000)
-            ->decrement('min_to_read', 4);
+            ->where('id', 3)
+            ->decrement('min_to_read');
+17a. //Decrement by 10
+        DB::table('posts')
+            ->where('id', 3)
+            ->decrement('min_to_read',10);
 
 18.//Increment or decrement multiple columns
         DB::table('posts')
@@ -228,7 +236,7 @@ dd($updated);
         DB::table('posts')
             ->updateOrInsert(
                 ['excerpt' => 'Laravel 10x'],
-                ['id' => 1000]
+                ['id' => 3]
             );
 
 
