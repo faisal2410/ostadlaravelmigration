@@ -1,4 +1,6 @@
 /*
+
+👌Migration Commands
 1. php artisan make:migration create_posts_table
 2. php artisan migrate
 3. php artisan migrate:status
@@ -18,9 +20,21 @@
 13. php artisan make:migration rename_description_to_content_on_posts_table --table=posts
 14. composer require doctrine/dbal //for renaming we need to install this package
 15. php artisan make:migration drop_deleted_at_from_posts_table --table=posts
-
 */
 
+/*
+👌 Factory/Seeder Commands
+1. php artisan make:factory PostFactory
+2. php artisan make:model Post -f
+3. php artisan make:seeder PostSeeder
+4. php artisan db:seed --class=PostSeeder
+5. php artisan db:seed
+6. php artisan tinker
+7. App\Models\Post::factory(5)->create()
+8. php artisan db:seed
+9. php artisan migrate --seed
+10 php artisan migrate:refresh --seed
+*/
 
 /*
 👌 Primary and Foreign Key
