@@ -1,4 +1,43 @@
 /*
+Certainly! I'll be glad to teach you about Laravel's query builder methods select, distinct, get, find, first, value, and pluck. These methods are used for retrieving data from the database. Let's explore each one with code examples:
+
+👉select: The select method specifies the columns you want to retrieve from the table.
+
+$users = DB::table('users')
+    ->select('name', 'email')
+    ->get();
+👉distinct: The distinct method ensures that only distinct (unique) values are returned for the specified columns.
+
+$categories = DB::table('products')
+    ->distinct()
+    ->pluck('category');
+👉get: The get method retrieves all records from the table.
+
+$users = DB::table('users')->get();
+👉find: The find method retrieves a single record by its primary key.
+
+$user = DB::table('users')->find(1);
+👉first: The first method retrieves the first record from the table.
+
+$user = DB::table('users')
+    ->where('active', 1)
+    ->first();
+👉value: The value method retrieves a single value from the first record that matches the query.
+
+$count = DB::table('users')->where('active', 1)->value('count');
+
+👉pluck: The pluck method retrieves a single column's values from the table as a flat array.
+
+$emails = DB::table('users')->pluck('email');
+
+These are some of the commonly used query builder methods for data retrieval in Laravel. You can modify the table name (users, products in the examples) and column names to match your specific database structure. Remember to import the DB facade at the top of your file:
+
+
+use Illuminate\Support\Facades\DB;
+
+Feel free to utilize these methods based on your specific requirements, and let me know if you have any further questions or need additional guidance!
+
+
 Certainly! I'd be happy to help you learn about Laravel's query builder methods for inserting and updating data. Let's go through each method one by one and provide code examples for each.
 
 👉insert: The insert method is used to insert a new record into a database table. It takes an array of column and value pairs representing the data to be inserted.
