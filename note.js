@@ -158,7 +158,7 @@ dd($posts);
                 'user_id' => 1,
                 'title' => 'X',
                 'slug' => 'x',
-                'excerpt' => 'Updated excerpt',
+                'excerpt' => 'Updated excerpt ',
                 'description' => 'Updated description',
                 'is_published' => true,
                 'min_to_read' => 2,
@@ -242,12 +242,12 @@ dd($updated);
 
 20.// Delete one row
         DB::table('posts')
-            ->where('id', 1017)
+            ->where('id', 3)
             ->delete();
 
 21.//Delete based on multiple conditions
         DB::table('posts')
-            ->where('id', 1014)
+            ->where('id', 3)
             ->where('title', 'x')
             ->delete();
 
@@ -274,7 +274,7 @@ dd($updated);
 26.// Min
         DB::table('posts')->where('is_published', true)->min('min_to_read');
 27.// whereNot()
-        DB::table('posts')->whereNot('min_to_read', 1)->get();
+        DB::table('posts')->whereNot('min_to_read', 5)->get();
         DB::table('posts')->whereNot('min_to_read', '>', 1)->get();
 
 28.// orWhereNot()
