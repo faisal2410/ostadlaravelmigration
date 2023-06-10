@@ -311,8 +311,10 @@ dd($updated);
 
 /*
 👉 Query Builder Advance Topics
+👉php artisan make:migration set_description_to_text_on_posts_table --table=posts //this is for fulltext index part
 
 👉 Database Transactions
+
 php artisan migrate:refresh
 php artisan tinker
 User::factory(20)->create()
