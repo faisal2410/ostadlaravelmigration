@@ -304,3 +304,236 @@ dd($updated);
         DB::table('posts')->whereNotBetween('min_to_read', [1, 5])->get();
 
 */
+
+
+
+
+
+/*
+👉 Query Builder Advance Topics
+
+👉 Database Transactions
+php artisan migrate:refresh
+php artisan tinker
+User::factory(20)->create()
+App\Models\Post::factory(50)->create()
+
+33. Database Transactions:
+
+DB::transaction(function () {
+            DB::table('users')
+                ->where('id', 1)
+                ->decrement('balance', 20);
+
+            DB::table('users')
+                ->where('id', 2)
+                ->increment('balance', 20);
+        });
+
+34. Pessimistic Locking :
+
+  DB::transaction(function () {
+
+👉way1
+            DB::table('users')
+                ->where('id', 1)
+                ->lockForUpdate()
+                ->decrement('balance', 100);
+
+            DB::table('users')
+                ->where('id', 2)
+                ->lockForUpdate()
+                ->increment('balance', 100);
+
+👉way2
+
+             DB::table('users')
+              ->where('id', 1)
+              ->sharedLock()
+              ->decrement('balance', 100);
+
+        });
+
+35. 👉 Chunking Data
+👉The chunk() method retrieves data in smaller more manageable "chunks" rather than
+getting all data and chunking it afterwards
+
+ DB::table('posts')
+            ->orderBy('id')
+            ->chunk(150, function($posts) {
+                foreach ($posts as $post) {
+                    echo $post->title;
+                }
+            });
+
+36. 👉 Streaming Results Lazily
+
+ 👉 lazy():The lazy() method is used to retrieve a large number of records without overwhelming
+the server's memory
+
+        DB::table('posts')
+            ->orderBy('id')
+            ->lazy()->each(function($post) {
+                echo $post->title;
+            });
+
+
+👉 lazilyById()
+
+        DB::table('posts')
+            ->where('id', 1)
+            ->lazyById()
+            ->first();
+
+37.👉Raw Methods:
+
+👉 selectRaw()
+        DB::table('posts')
+            ->selectRaw('count(*) as post_count')
+            ->first();
+
+👉 whereRaw()
+        DB::table('posts')
+            ->whereRaw('created_at > NOW() - INTERVAL 1 DAY')
+            ->get();
+
+👉 havingRaw()
+        DB::table('posts')
+            ->select('user_id', DB::raw('SUM(min_to_read) as total_time'))
+            ->groupBy('user_id')
+            ->havingRaw('SUM(min_to_read) > 10')
+            ->get();
+
+👉orderByRaw()
+        DB::table('posts')
+            ->orderByRaw('created_at DESC')
+            ->get();
+
+👉groupByRaw()
+        DB::table('posts')
+            ->select('user_id', DB::raw('AVG(rating) as avg_rating'))
+            ->groupByRaw('user_id')
+            ->get();
+38. 👉 Ordering through the query builder:
+
+👉The orderBy() method allows you to sort your query results by a specific column
+in ascending or descending order.
+👉The latest() and oldest() methods allows you to sort your query results by the
+created_at timestamp in descending and ascending order
+
+👉one orderBy()
+        DB::table('posts')
+            ->orderBy('title', 'desc')
+            ->get();
+
+👉 multiple orderBy() methods
+        DB::table('posts')
+            ->orderBy('title')
+            ->orderBy('min_to_read')
+            ->get();
+
+👉latest()
+        DB::table('posts')
+            ->latest()
+            ->get();
+
+👉oldest()
+        DB::table('posts')
+            ->oldest()
+            ->get();
+
+
+39. 👉 Full text Indexes :
+
+    👉 We have the wherefulltext() and orWhereFullText() methods, which both are
+       used to add full text "where" clauses to a query for columns that have
+       full text indexes.
+
+    👉 "Natural Language Mode" is a feature of full text search that allows
+       users to search for words or phrases using natural language syntax.
+
+    👉 php artisan make:migration set_description_to_text_on_posts_table --table=posts
+
+ 👉 whereFullText()
+        DB::table('posts')
+            ->whereFullText('description', 'quo')
+            ->get();
+
+👉 orWhereFullText()
+        DB::table('posts')
+            ->whereFullText('description', 'quo')
+            ->orWhereFullText('description', 'Doloribus')
+            ->get();
+
+40.👉 Limit and Offset through query builder :
+👉 The limit() method is used to limit the number of records that are
+returned from a query.
+👉 The offset() method is used to skip a specified number of records from
+the begining of a query.
+
+👉limit()
+
+        DB::table('posts')->limit(10)->get();
+
+👉 offset()
+
+        DB::table('posts')->offset(10)->limit(10)->get();
+
+
+41.👉 Conditional Clause :
+👉  DB::table('posts')
+            ->when(function ($query) {
+                return $query->where('is_published', true);
+            })->get();
+
+
+
+42.👉Removing Existing Ordering :
+👉$posts = DB::table('posts')
+            ->orderBy('is_published');
+
+        $unorderedPosts = $posts->reorder()->get();
+
+        dd($unorderedPosts);
+
+
+👉  $posts = DB::table('posts')
+            ->orderBy('is_published');
+
+$unorderedPosts = $posts->reorder('title', 'desc')->get();
+    dd($unorderedPosts);
+
+42. 👉 Paginate Method
+👉$posts = DB::table( 'posts' )->paginate( 10 );
+  dd($posts);
+
+👉 $posts = DB::table( 'posts' )->paginate( 10, ['*'], 'p', 1 );
+dd($posts);
+
+👉 $posts = DB::table( 'posts' )->paginate( 10, ['*'], 'p', 1 );
+
+   return view( 'posts.index', compact( 'posts' ) );
+
+👉 $posts = DB::table( 'posts' )->paginate( 10);
+
+   return view( 'posts.index', compact( 'posts' ) );
+
+
+43.👉simplePaginate() Method :
+
+👉 $posts = DB::table('posts')->simplePaginate(10);
+
+        return view('posts.index', compact('posts'));
+
+
+44.👉 cursorPaginate() Method :
+
+👉$posts = DB::table('posts')
+            ->orderBy('id')
+            ->cursorPaginate(10);
+
+        return view('posts.index', compact('posts'));
+
+
+*/
+
