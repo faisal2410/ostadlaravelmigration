@@ -604,3 +604,154 @@ dd($posts);
 */
 
 
+
+/*
+✅Fillable Property
+
+     The `$fillable` property is an array that lists the fields that are allowed to be mass assigned.
+     Any field not listed in the `$fillable` array will not be allowed to be mass assigned.
+     This is useful when you want to allow the user to set specific fields of the model.
+
+    protected $fillable = [
+    "user_id",
+    "title",
+    "slug",
+    "excerpt",
+    "description",
+    "is_published",
+    "min_to_read"
+];
+
+
+  ✅ Guarded Property
+     The $guarded property is an array that lists the fields that are not allowed to be mass assigned.
+     Any field not listed in the $guarded array will be allowed to be mass assigned.
+     This is useful when you want to prevent the user from setting specific fields of the model.
+
+    protected $guarded = ['is_published'];
+
+
+*/
+
+/*
+👉 Building Queries:
+
+✅ Post::where('is_published',true)->get();
+
+✅ Post::where('is_published',true)
+->where('min_to_read','>',5)
+->orderBy('title','desc')
+->get();
+
+✅ Post::where('is_published',true)
+->where('min_to_read','>',5)
+->orderBy('title','desc')
+->get()
+->count();
+
+✅Post::where('is_published',true)
+  ->cursorPaginate(10);
+
+✅ Find() method is used to retrieve a specific row from the database based
+on the primary key
+✅ The first() method is needed because we want to find one row based on a condition
+✅ The firstWhere() method is used to retrieve a specific post by a custom attribute
+✅ The firstOrFail() method is a method used to retrieve a specific row from
+the database based on a custom attribute.
+
+👉Retrieve based on the primary key (RETURNS NULL)
+        Post::find(1000);
+
+👉Retrieve based on the primary key (RETURNS ERROR)
+        Post::findOrFail(1000);
+
+👉 Retrieve based on a condition
+      ✅  Post::where('slug', 'ullam-rerum-rem-esse-voluptatem-non-necessitatibus-iste-hic')
+        ->first();
+
+      ✅  Post::firstWhere('slug', 'est-cum-odit-tempora-voluptates-quis-eligendi');
+
+👉Retrieve a specific row based on a custom attribute
+        Post::where('slug', 'est-cum-odit-tempora-voluptates-quis-eligendi')
+        ->firstOrFail();
+
+
+*/
+
+/*
+👉 Inserting/Creating Models :
+✅ Model instance refers to an instance of a model class, which is a representation
+of a database table
+
+ ✅ Model Instance
+
+        $post = new Post;
+
+        $post->user_id = 17;
+        $post->title = "Test Title";
+        $post->slug = "test-title";
+        $post->excerpt = "woohoo";
+        $post->description = "Test";
+        $post->is_published = true;
+        $post->min_to_read = 3;
+        $post->save();
+
+✅Using the fill() method
+
+        $post = new Post;
+        $post->fill([
+            "user_id" => 17,
+            "title" => "Fill method",
+            "slug" => "fill-method",
+            "excerpt" => "fill method",
+            "description" => "fill method",
+            "is_published" => true,
+            "min_to_read" => 3
+        ]);
+
+✅ Using Eloquent magic with the create() method
+
+        Post::create([
+            "user_id" => 17,
+            "title" => "Eloquent is Awesome",
+            "slug" => "eloquent-is-awesome",
+            "excerpt" => "Eloquent is awesome!!",
+            "description" => "Even more awesome!!",
+            "is_published" => true,
+            "min_to_read" => 3
+        ]);
+
+✅ Using the make() method
+        Post::make([
+            "user_id" => 17,
+            "title" => "Eloquent is Awesome3",
+            "slug" => "eloquent-is-awesome3",
+            "excerpt" => "Eloquent is awesome!!",
+            "description" => "Even more awesome!!",
+            "is_published" => true,
+            "min_to_read" => 3
+        ]);
+
+
+
+*/
+
+
+/*
+👉 Retrieving all models :
+
+ ✅Retrieve all models
+        Post::all();
+
+✅ Retrieve the count of all Models
+        Post::all()->count();
+
+✅Paginate through the Query Builder
+        Post::paginate(25);
+        Post::simplePaginate(25);
+        Post::cursorPaginate(25);
+
+*/
+
+
+
