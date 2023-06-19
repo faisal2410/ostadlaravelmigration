@@ -10,9 +10,13 @@ class PostsController extends Controller {
      * Display a listing of the resource.
      */
     public function index() {
+$posts=DB::table( 'posts' )
+    ->when( function ( $query ) {
+        return $query->where( 'is_published', false );
+    } )->get();
 
-$posts=DB::table( 'posts' )->where( 'is_published', true )->max( 'min_to_read' );
-dd($posts);
+    dd($posts);
+
 
     }
 

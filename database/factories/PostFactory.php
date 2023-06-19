@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -20,7 +21,7 @@ class PostFactory extends Factory {
         $title = fake()->sentence;
         $slug = Str::slug( $title, '-' );
         return [
-            'user_id'=>rand(1,5),
+           'user_id' => DB::table('users')->inRandomOrder()->value('id'),
             'title'        => $title,
             'slug'         => $slug,
             'excerpt'      => fake()->sentence,

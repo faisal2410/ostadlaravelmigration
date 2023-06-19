@@ -539,3 +539,68 @@ dd($posts);
 
 */
 
+
+/*
+👉Eloquent ORM
+
+👉In the Post Model
+
+✅Change table
+     protected $table = 'users';
+
+✅Change primary key
+    protected $primaryKey = 'slug';
+
+✅Disable auto increment of the primary key
+    public $incrementing = false;
+
+✅Change data type of the primary key
+    protected $keyType = 'string';
+
+✅Disable timestamps on a model
+    public $timestamps = false;
+
+✅Change dateTime format of timestamps
+    public $timestamps = false;
+
+✅Rename the created_at and updated_at
+    const CREATED_AT = 'date_created_at';
+    const UPDATED_AT = 'date_updated_at';
+
+✅Add default attributes to your model ( recommended doing this on database-level
+    protected $attributes = [
+        "user_id" => 1,
+        "is_published" => false,
+        "description" => "Please add your description right here.."
+    ];
+
+✅Change default database connection
+    protected $connection = 'sqlite';
+
+👉 In the User Model :
+
+✅ The attributes that are mass assignable.
+
+    protected $fillable = [
+    'name',
+    'email',
+    'password',
+];
+
+
+✅ The attributes that should be hidden for serialization.
+
+    protected $hidden = [
+    'password',
+    'remember_token',
+];
+
+✅The attributes that should be cast.
+
+    protected $casts = [
+    'email_verified_at' => 'datetime',
+];
+
+*/
+
+
